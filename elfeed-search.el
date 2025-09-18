@@ -360,8 +360,13 @@ The customization `elfeed-search-date-format' sets the formatting."
                                title-width
                                elfeed-search-title-max-width)
                         :left)))
-    (insert (propertize date 'face 'elfeed-search-date-face) " ")
-    (insert (propertize title-column 'face title-faces 'kbd-help title) " ")
+    (insert (propertize date 'face 'elfeed-search-date-face))
+    (insert (propertize " " 'display `(space :align-to (string-width date))))
+    (insert (propertize title-column 'face title-faces 'kbd-help title))
+    (insert (propertize " " 'display
+                        `(space :align-to ,(+ (string-width date)
+                                              (string-width title-column)
+                                              2))))
     (when feed-title
       (insert (propertize feed-title 'face 'elfeed-search-feed-face) " "))
     (when tags

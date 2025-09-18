@@ -451,13 +451,16 @@ The customization `elfeed-search-date-format' sets the formatting."
     (insert (elfeed-add-properties date-str
                                    'face 'elfeed-search-date-face
                                    'mouse-face 'highlight 'elfeed-date date-float)
-            " "
+            (propertize " " 'display `(space :align-to ,(1+ (string-width date-str))))
             (elfeed-add-properties title-column
                                    'face title-faces 'kbd-help title
                                    'mouse-face 'highlight 'elfeed-entry-title t))
     (when feed-title
-      (insert " " (propertize feed-title 'face 'elfeed-search-feed-face
-                              'mouse-face 'highlight 'elfeed-feed feed)))
+      (insert (propertize " " 'display `(space :align-to ,(+ (string-width date-str)
+                                                             (string-width title-column)
+                                                             2)))
+              (propertize feed-title 'face 'elfeed-search-feed-face
+			  'mouse-face 'highlight 'elfeed-feed feed)))
     (when tags
       (insert " (" (elfeed-search--format-tags tags) ")"))))
 
